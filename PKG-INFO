@@ -1,17 +1,18 @@
 Metadata-Version: 2.1
 Name: rubpy
-Version: 5.2.1
-Summary: This is an unofficial library and fastest library for deploying robots on Rubika accounts.
+Version: 7.0.6
+Summary: A powerful, fast and optimal library for making robots in Rubika with sync and async support.
 Home-page: https://github.com/shayanheidari01/rubika
 Author: Shayan Heidari
-Author-email: snipe4kill@yahoo.com
-Keywords: rubika,rubpy,rubikaio,chat,bot,robot,asyncio
+Author-email: contact@shayanheidari.info
+Keywords: rubika,rubpy,chat,bot,robot,asyncio
 Classifier: Programming Language :: Python :: 3.7
 Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
 Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
 Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
 Classifier: License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
 Classifier: Topic :: Internet
 Classifier: Topic :: Communications
@@ -21,10 +22,26 @@ Classifier: Topic :: Software Development :: Libraries :: Python Modules
 Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
 Requires-Python: ~=3.7
 Description-Content-Type: text/markdown
+Requires-Dist: aiohttp
+Requires-Dist: pycryptodome
+Requires-Dist: pydantic==1.10.12
+Requires-Dist: aiofiles
+Requires-Dist: markdownify
+Requires-Dist: mutagen
+Provides-Extra: cv
+Requires-Dist: opencv-python; extra == "cv"
+Provides-Extra: movie
+Requires-Dist: numpy; extra == "movie"
+Requires-Dist: moviepy; extra == "movie"
+Requires-Dist: pillow; extra == "movie"
+Provides-Extra: pil
+Requires-Dist: pillow; extra == "pil"
+Provides-Extra: rtc
+Requires-Dist: aiortc; extra == "rtc"
 
 <p align="center">
     <a href="github.address">
-        <img src="https://upcdn.io/W142hJk/thumbnail/demo/4mrDXtYPJA.png.crop" alt="Rubpy" width="128">
+        <img src="https://raw.githubusercontent.com/shayanheidari01/rubika/master/icon.png" alt="Rubpy" width="128">
     </a>
     <br>
     <b>Rubika API Framework for Python</b>
@@ -33,7 +50,7 @@ Description-Content-Type: text/markdown
         Homepage
     </a>
     •
-    <a href="https://github.com/shayanheidari01/rubika/raw/master/docs/rubpy-documents.pdf">
+    <a href="https://docs.rubpy.site/">
         Documentation
     </a>
     •
@@ -49,53 +66,54 @@ Description-Content-Type: text/markdown
 ## Rubpy
 
 > Elegant, modern and asynchronous Rubika API framework in Python for users and bots
-### Bots Examples
+
+### Using Async
 ```python
-from rubpy import Bot
+from rubpy import Client, filters, utils
+from rubpy.types import Updates
 
-app = Bot('token')
+bot = Client(name='rubpy')
 
-async def my_bot(bot):
-    me = await bot.getMe()
-    print(me)
+@bot.on_message_updates(filters.text)
+async def updates(update: Updates):
+    await update.reply('`hello` __from__ **rubpy**')
 
-app.run(my_bot)
+bot.run()
 ```
-**OR**
+
+**Using Async**
 ```python
-from rubpy import Bot
+from rubpy import Client
+import asyncio
 
-app = Bot('token')
+async def main():
+    async with Client(name='rubpy') as bot:
+        result = await bot.send_message('me', '`hello` __from__ **rubpy**')
+        print(result)
 
-async def my_bot(bot):
-    me = await bot.sendMessage('chat_id', 'text')
-    print(me)
-
-app.run(my_bot)
+asyncio.run(main())
 ```
-### Accounts
-``` python
+
+### Using Sync
+```python
 from rubpy import Client
 
-app = Client('MY-AUTH')
+bot = Client('rubpy')
 
-@app.handler
-async def my_bot(bot, message):
-    await message.reply('``Hello`` __from__ **Rubpy**!')
+@bot.on_message_updates()
+def updates(message):
+    message.reply('`hello` __from__ **rubpy**')
 
+bot.run()
 ```
 
-**Another example:**
-``` python
+**Using Sync:**
+```python
 from rubpy import Client
 
-app = Client("my_account_auth")
-
-async def my_bot(bot):
-    await bot.sendText('object_guid', '``Hello`` __from__ **Rubpy**!')
-
-app.run(my_bot)
-
+with Client(name='rubpy') as client:
+    result = client.send_message('me', '`hello` __from__ **rubpy**')
+    print(result)
 ```
 
 **Rubpy** is a modern, elegant and asynchronous framework. It enables you to easily interact with the main Rubika API through a user account (custom client) or a bot
@@ -114,5 +132,5 @@ identity (bot API alternative) using Python.
 ### Installing
 
 ``` bash
-pip3 install rubpy==5.2.1
+pip3 install -U rubpy
 ```

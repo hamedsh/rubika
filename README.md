@@ -9,7 +9,7 @@
         Homepage
     </a>
     •
-    <a href="https://docs.rubpy.site">
+    <a href="https://docs.rubpy.site/">
         Documentation
     </a>
     •
@@ -26,7 +26,7 @@
 
 > Elegant, modern and asynchronous Rubika API framework in Python for users and bots
 
-### Async Accounts
+### Using Async
 ```python
 from rubpy import Client, filters, utils
 from rubpy.types import Updates
@@ -35,13 +35,12 @@ bot = Client(name='rubpy')
 
 @bot.on_message_updates(filters.text)
 async def updates(update: Updates):
-    print(update)
-    await update.reply(utils.Code('hello') + utils.Underline('from') + utils.Bold('rubpy'))
+    await update.reply('`hello` __from__ **rubpy**')
 
 bot.run()
 ```
 
-**Async Another Example:**
+**Using Async**
 ```python
 from rubpy import Client
 import asyncio
@@ -54,7 +53,7 @@ async def main():
 asyncio.run(main())
 ```
 
-### Sync Accounts
+### Using Sync
 ```python
 from rubpy import Client
 
@@ -67,7 +66,7 @@ def updates(message):
 bot.run()
 ```
 
-**Sync Another Example:**
+**Using Sync:**
 ```python
 from rubpy import Client
 

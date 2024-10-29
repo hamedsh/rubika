@@ -1,10 +1,12 @@
 from setuptools import setup, find_packages
 
 requirements = [
-    'aiohttp',
+    'aiohttp==3.10.10',
     'pycryptodome',
     'pydantic==1.10.12',
     'aiofiles',
+    'markdownify',
+    'mutagen'
 ]
 
 with open('README.md', encoding='UTF-8') as f:
@@ -12,13 +14,13 @@ with open('README.md', encoding='UTF-8') as f:
 
 setup(
     name = 'rubpy',
-    version = '6.7.7',
+    version = '7.0.6',
     author='Shayan Heidari',
     author_email = 'contact@shayanheidari.info',
-    description = 'This is an unofficial library and fastest library for deploying robots on Rubika accounts.',
+    description = 'A powerful, fast and optimal library for making robots in Rubika with sync and async support.',
     keywords = ['rubika', 'rubpy', 'chat', 'bot', 'robot', 'asyncio'],
     long_description = readme,
-    python_requires="~=3.7",
+    python_requires='~=3.7',
     long_description_content_type = 'text/markdown',
     url = 'https://github.com/shayanheidari01/rubika',
     packages = find_packages(),
@@ -26,7 +28,9 @@ setup(
     install_requires = requirements,
     extras_require={
         'cv': ['opencv-python'],
-        'pil': ['pillow']
+        'movie': ['numpy', 'moviepy', 'pillow'],
+        'pil': ['pillow'],
+        'rtc': ['aiortc']
     },
     classifiers=[
         'Programming Language :: Python :: 3.7',
@@ -35,6 +39,7 @@ setup(
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
         'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
         'Topic :: Internet',
         'Topic :: Communications',
@@ -43,4 +48,4 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: Libraries :: Application Frameworks'
     ],
-)
+).run_command('sdist')
